@@ -1,0 +1,16 @@
+{
+  "name": "backend-journey",
+  "version": "1.0.0",
+  "description": "backend code journey with nodejs and mongodb.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "backend",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Deepak Chaudhari",
+  "license": "ISC"
+}
