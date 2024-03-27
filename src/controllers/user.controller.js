@@ -181,7 +181,7 @@ const refreshAccessToken = asyncHandler( async (req, res) => {
             incomingRefreshToken,
             process.env.REFRESH_TOKEN_SECRET
         )
-        const user = await User.findById(decodedToken?.id);
+        const user = await User.findById(decodedToken?._id);
         if(!user){
             throw new ApiError(401, "Invalid refresh token.")
         }
@@ -228,10 +228,14 @@ const changeCurrentPassword = asyncHandler( async (req, res) => {
     ))
 })
 
-const getCurrentUser = asyncHandler( async (req, res) => {
+const getCurrentUser = asyncHandler(async(req, res) => {
     return res
-        .status(200)
-        .json( new ApiResponse(200, req.user, "Current user fetched successfully."))
+    .status(200)
+    .json(new ApiResponse(
+        200,
+        req.user,
+        "User fetched successfully"
+    ))
 })
 
 const updateAccountDetails = asyncHandler (async (req, res) => {
@@ -297,7 +301,6 @@ const getUserChannelProfile = asyncHandler( async (req, res) => {
     if(!username?.trim()){
         throw new ApiError(400, "Username is missing.")
     }
-
     const channel = await User.aggregate([
         { 
             $match: {
