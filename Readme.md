@@ -24,8 +24,10 @@ The project employs:
 ## Screenshots
 
 Screenshots of Postman requests demonstrating API endpoints and functionality will be provided in the repository's screenshots directory.
+
 - **Request:**
 <img width="940" alt="image" src="https://github.com/deepak14ri/backend-journey/assets/49471265/3308511b-6e18-48f3-80e8-53af6c56eda3">
+
 - **Response:**
    <img width="950" alt="image" src="https://github.com/deepak14ri/backend-journey/assets/49471265/b6a9a41c-597b-4724-bd69-d59309f1abac">
 
