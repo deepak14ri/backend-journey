@@ -25,6 +25,15 @@ The project employs:
 
 Screenshots of Postman requests demonstrating API endpoints and functionality will be provided in the repository's screenshots directory.
 
+<<<<<<< HEAD
+=======
+- **Request:**
+<img width="940" alt="image" src="https://github.com/deepak14ri/backend-journey/assets/49471265/3308511b-6e18-48f3-80e8-53af6c56eda3">
+
+- **Response:**
+   <img width="950" alt="image" src="https://github.com/deepak14ri/backend-journey/assets/49471265/b6a9a41c-597b-4724-bd69-d59309f1abac">
+
+>>>>>>> 9a23dd678586b000cb4738939b9a09c28128f69b
 ## Setup Instructions
 
 1. Clone the repository to your local machine.

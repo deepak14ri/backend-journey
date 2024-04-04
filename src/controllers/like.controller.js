@@ -4,6 +4,7 @@ import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import { Video } from "../models/video.model.js"
+import { Tweet } from "../models/tweet.model.js/"
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
     const {videoId} = req.params
@@ -79,6 +80,37 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 const toggleTweetLike = asyncHandler(async (req, res) => {
     const {tweetId} = req.params
     //TODO: toggle like on tweet
+    if(!isValidObjectId(tweetId)){
+        throw new ApiError(400, "Invalid tweetId.")
+    }
+    const tweet = await Tweet.findById("tweetId");
+    if(!tweet){
+        throw new ApiError(400, "Tweet not found.")
+    }
+    const tweetAlreadyLiked = await Like.findOne({
+        tweet: tweet._id,
+        likedBy: req.user?._id
+    });
+
+    if(tweetAlreadyLiked){
+        await Like.findByIdAndDelete(tweetAlreadyLiked._id);
+        return res  
+            .status(200)
+            .json( new ApiResponse(
+                200, {}, "Tweet disliked successfully."
+            ))
+    }else{
+        await Like.create({
+            tweet: tweet._id, 
+            likedBy: req.user._id
+        })
+    }
+
+    return res
+        .status(200)
+        .json( new ApiResponse(
+            200, {}, "Tweet liked successfully."
+        ))
 }
 )
 
