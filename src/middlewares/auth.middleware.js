@@ -3,24 +3,29 @@ import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 
-export const verifyJWT = asyncHandler( async (req, _, next) => {
+export const verifyJWT = asyncHandler(async (req, _, next) => {
     try {
-        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
-        if(!token){
-            throw new ApiError(401, "Unauthorized request.")
+        let token = req.cookies?.accessToken;
+        if (!token) {
+            token = req.header("Authorization")?.replace("Bearer ", "");
         }
-        const decodedToken = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-        
-        const user = await User.findById(decodedToken?._id).select("-password -refreshToken");
-    
+
+        if (!token) {
+            throw new ApiError(401, "No authorization token provided.");
+        }
+
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+        const user = await User.findById(decodedToken._id).select("-password -refreshToken");
+
         if (!user) {
-            //NEXT_VIDEO : DISCUSSION ABOUT FRONTEND
             throw new ApiError(401, "Invalid access token.");
         }
-        
+
         req.user = user;
         next();
     } catch (error) {
-        throw new ApiError(401, error?.message || "Invalid access token.");
+        console.error("JWT verification error:", error.message);
+        throw new ApiError(401, error.message || "Invalid access token.");
     }
-})
+});
